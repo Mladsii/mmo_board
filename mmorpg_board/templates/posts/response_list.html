@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Мои отклики</h2>
+<ul>
+    {% for response in responses %}
+    <li>
+        <p>{{ response.text }}</p>
+        <p><strong>Объявление:</strong> {{ response.post.title }}</p>
+        <p><strong>Статус:</strong> {% if response.accepted %}Принят{% else %}На рассмотрении{% endif %}</p>
+        <form method="post" action="{% url 'delete_response' response.pk %}">
+            {% csrf_token %}
+            <button type="submit">Удалить</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'post_list' %}">Назад к списку объявлений</a>
+{% endblock %}
